@@ -6,3 +6,5 @@ urlpatterns = [
   path('about/', views.about, name='about'),
   path('cats/', views.cat_index, name='cat-index')
 ]
+
+# test note
