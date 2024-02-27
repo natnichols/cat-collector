@@ -1,6 +1,6 @@
 # import
 from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Cat
 
 # Create views here
@@ -23,3 +23,11 @@ class CatCreate(CreateView):
   fields = '__all__'
   # fields = ['name', 'breed', 'description', 'age']
   # success_url = '/cats/'
+
+class CatUpdate(UpdateView):
+  model = Cat
+  fields = ['breed', 'description', 'age'] # disallow renaming of cat
+
+class CatDelete(DeleteView):
+  model = Cat
+  success_url = '/cats/'
