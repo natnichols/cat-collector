@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Release Cat?</h1>
+  <img src="{% static 'images/nerd-cat.svg' %}" alt="A cat using a computer"/>
+</div>
+<h2>Are you sure you want to release {{ cat.name }}?</h2>
+
+<form action="" class="form" method="post">
+  {% csrf_token %}
+  <a 
+    href="{% url 'cat-detail' cat.id %}"
+    class="btn secondary"
+  >
+    Cancel
+  </a>
+  <button type="submit" class="btn danger">Yes - Release {{ cat.name }}!</button>
+</form>
+
+{% endblock %}
