@@ -1,5 +1,5 @@
 # import
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Cat
 from .forms import FeedingForm
@@ -22,6 +22,17 @@ def cat_detail(request, cat_id):
     'cat': cat,
     'feeding_form': feeding_form
   })
+
+def add_feeding(request, cat_id):
+  # create a ModelForminstance using date in request.POST
+  form = FeedingForm(request.POST)
+  # validate the form
+  if form.is_valid():
+    # don't save form to the db until it has cat_id assigned
+    new_feeding = form.save(commit=False)
+    new_feeding.cat_id = cat_id
+    new_feeding.save()
+  return redirect('cat-detail', cat_id=cat_id)
 
 class CatCreate(CreateView):
   model = Cat
