@@ -122,7 +122,29 @@
       {% endif %}
     </div>
     <h3>Available Toys</h3>
-    <div class="subsection-content"></div>
+    <div class="subsection-content">
+      {% if toys.count %}
+        {% for toy in toys.all %}
+          <div class="toy-container">
+            <div 
+              class="color-block"
+              style="background-color: {{ toy.color }}"
+            ></div>
+            <a href="{% url 'toy-detail' toy.id %}">
+              <p>A {{ toy.color }} {{ toy.name }}</p>
+            </a>
+            <form action="" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn submit">Give Toy</button>
+            </form>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="all-toys">
+          {{cat.name}} already has all the available toys 🥳
+        </p>
+      {% endif %}
+    </div>
   </section>
 </div>
 
