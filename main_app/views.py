@@ -6,6 +6,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Cat, Toy
 from .forms import FeedingForm
 
@@ -66,35 +67,35 @@ def assoc_toy(request, cat_id, toy_id):
 class Home(LoginView):
   template_name = 'home.html'
 
-class CatCreate(CreateView):
+class CatCreate(LoginRequiredMixin, CreateView):
   model = Cat
   fields = ['name', 'breed', 'description', 'age']
   def form_valid(self, form):
     form.instance.user = self.request.user
     return super().form_valid(form)
 
-class CatUpdate(UpdateView):
+class CatUpdate(LoginRequiredMixin, UpdateView):
   model = Cat
   fields = ['breed', 'description', 'age'] # disallow renaming of cat
 
-class CatDelete(DeleteView):
+class CatDelete(LoginRequiredMixin, DeleteView):
   model = Cat
   success_url = '/cats/'
 
-class ToyCreate(CreateView):
+class ToyCreate(LoginRequiredMixin, CreateView):
   model = Toy
   fields = '__all__'
 
-class ToyList(ListView):
+class ToyList(LoginRequiredMixin, ListView):
   model = Toy
 
-class ToyDetail(DetailView):
+class ToyDetail(LoginRequiredMixin, DetailView):
   model = Toy
 
-class ToyUpdate(UpdateView):
+class ToyUpdate(LoginRequiredMixin, UpdateView):
   model = Toy
   fields = ['name', 'color']
 
-class ToyDelete(DeleteView):
+class ToyDelete(LoginRequiredMixin, DeleteView):
   model = Toy
   success_url = '/toys/'
