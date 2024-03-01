@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from .models import Cat, Toy
 from .forms import FeedingForm
 
@@ -29,6 +30,7 @@ def signup(request):
 def about(request):
   return render(request, 'about.html')
 
+@login_required
 def cat_index(request):
   cats = Cat.objects.filter(user=request.user)
   return render(request, 'cats/index.html', {'cats': cats})
