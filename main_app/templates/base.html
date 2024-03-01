@@ -28,11 +28,17 @@
     </div>
     <nav>
       <ul>
-        <li><a href="{% url 'cat-index' %}">All Cats ᓚᘏᗢ</a></li>
-        <li><a href="{% url 'toy-index' %}">All Toys ᓚᘏᗢ🧶</a></li>
-        <li><a href="{% url 'cat-create' %}">Add a Cat ᓚᘏᗢ</a></li>
-        <li><a href="{% url 'toy-create' %}">Add a Toy 🧶✨</a></li>
-        <li><a href="{% url 'about' %}">About ᓚᘏᗢ</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'cat-index' %}">All Cats ᓚᘏᗢ</a></li>
+          <li><a href="{% url 'toy-index' %}">All Toys ᓚᘏᗢ🧶</a></li>
+          <li><a href="{% url 'cat-create' %}">Add a Cat ᓚᘏᗢ</a></li>
+          <li><a href="{% url 'toy-create' %}">Add a Toy 🧶✨</a></li>
+          <li><a href="{% url 'about' %}">About ᓚᘏᗢ</a></li>
+          <li><a href="{% url 'logout' %}">Log out 👋</a></li>
+        {% else %}
+          <li><a href="{% url 'about' %}">About ᓚᘏᗢ</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>
