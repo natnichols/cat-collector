@@ -35,6 +35,7 @@ def cat_index(request):
   cats = Cat.objects.filter(user=request.user)
   return render(request, 'cats/index.html', {'cats': cats})
 
+@login_required
 def cat_detail(request, cat_id):
   cat = Cat.objects.get(id=cat_id)
   feeding_form = FeedingForm()
@@ -45,6 +46,7 @@ def cat_detail(request, cat_id):
     'toys': toys_cat_doesnt_have
   })
 
+@login_required
 def add_feeding(request, cat_id):
   # create a ModelForminstance using date in request.POST
   form = FeedingForm(request.POST)
@@ -56,6 +58,7 @@ def add_feeding(request, cat_id):
     new_feeding.save()
   return redirect('cat-detail', cat_id=cat_id)
 
+@login_required
 def assoc_toy(request, cat_id, toy_id):
   Cat.objects.get(id=cat_id).toys.add(toy_id)
   return redirect('cat-detail', cat_id=cat_id)
